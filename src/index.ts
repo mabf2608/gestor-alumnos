@@ -35,10 +35,14 @@ function main(){
     
         switch (index){
             case 0:
-                let name = readline.question('Ingrese el nombre del alumno: ')
-                let surname = readline.question('Ingrese el apellido del alumno: ')
-                let age = readline.questionInt('Ingrese la edad del alumno: ')
-                students.push(new Student(name, surname, age))
+                var studentName = readline.question('\nIngrese el nombre del alumno: ')
+                var studentSurname = readline.question('\nIngrese el apellido del alumno: ')
+                if(studentName.length <= 0 || studentSurname.length <= 0){
+                    console.log('El nombre del alumno no puede contener campos vacíos.')
+                }else{
+                    var age = readline.questionInt('\nIngrese la edad del alumno: ')
+                students.push(new Student(studentName, studentSurname, age))
+                }
                 break;
             case 1:
                 students.forEach((student) => {
@@ -46,12 +50,37 @@ function main(){
                 });
                 break;
             case 2:
+                var subjectIDToAdd = readline.questionInt('Ingrese el ID de la asignatura a añadir: ');
+
+                var studentID = readline.questionInt('Ingresa la ID del alumno al que quieres añadirle la asignatura: ')
+
+                students.forEach((student) =>{
+                    if(student.getStudentID === studentID){
+                        subjects.forEach((subject) =>{
+                            if(subject.getSubjectID === subjectIDToAdd){
+                                student.studentAddSubject(subject)
+                            }
+                        })
+                    }
+                });
                 break;
             case 3:
+                var studentID = readline.questionInt('Ingresa la ID del alumno del que quieres saber sus asignaturas: ')
+
+                console.log('Las asignaturas del alumno son las siguientes: ')
+                students.forEach((student) => {
+                    if(student.getStudentID===studentID){
+                        student.getStudentSubjects()
+                    }
+                });
                 break;
             case 4:
-                let subjectName = readline.question('Ingrese el nombre de la asignatura: ')
-                subjects.push(new Subject(subjectName))
+                var subjectName = readline.question('Ingrese el nombre de la asignatura: ')
+                if(subjectName.length <= 0 ){
+                    console.log('El nombre de la asignatura no puede contener campos vacíos.')
+                }else{
+                    subjects.push(new Subject(subjectName))
+                }
                 break;
             case 5:
                 subjects.forEach((subject) => {
@@ -60,11 +89,11 @@ function main(){
                 break;
         }
 
-        const continuar = readline.keyInYN('¿Desea realizar otra operación? ');
+        const continuar = readline.keyInYN('\n¿Desea realizar otra operación? ');
         if (continuar) {
           main(); // Llamada recursiva para reiniciar el proceso
         } else {
-          console.log('Gracias por usar nuestro gestor.');
+          console.log('\nGracias por usar nuestro gestor.');
         }
     
 }
