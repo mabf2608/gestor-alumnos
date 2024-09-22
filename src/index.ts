@@ -66,8 +66,9 @@ function main(){
                 break;
             case 3:
                 var studentID = readline.questionInt('Ingresa la ID del alumno del que quieres saber sus asignaturas: ')
-
-                console.log('Las asignaturas del alumno son las siguientes: ')
+                
+                //Intentar añadir el nombre cuando se dicen las materias asignadas a un alumno
+                console.log('Las asignaturas del alumno son las siguientes: \n')
                 students.forEach((student) => {
                     if(student.getStudentID===studentID){
                         student.getStudentSubjects()
