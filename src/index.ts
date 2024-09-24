@@ -1,6 +1,7 @@
 import * as readline from 'readline-sync';
 import {Student} from './Students/students';
 import {Subject} from './Subjects/subjects';
+import {Grade} from './Grades/grade';
 
 const students : Student[] = [
     new Student('Miguel','Bonilla', 22),
@@ -10,6 +11,11 @@ const students : Student[] = [
 const subjects : Subject[] = [
     new Subject('Lengua'),
     new Subject('Matematicas')
+]
+
+const grades : Grade[] = [
+    new Grade(1,1,8),
+    new Grade(2,1,5)
 ]
 
 function main(){
@@ -78,7 +84,7 @@ function main(){
             case 4:
                 var subjectName = readline.question('Ingrese el nombre de la asignatura: ')
                 if(subjectName.length <= 0 ){
-                    console.log('El nombre de la asignatura no puede contener campos vacíos.')
+                    console.log('ERROR: El nombre de la asignatura no puede contener campos vacíos.')
                 }else{
                     subjects.push(new Subject(subjectName))
                 }
@@ -87,6 +93,28 @@ function main(){
                 subjects.forEach((subject) => {
                     console.log(subject.toString())
                 });
+                break;
+            case 6:
+                var studentID = readline.questionInt('Ingresa el ID del alumno al que le quieres añadir nota: ')
+                var subjectID = readline.questionInt('Ingresa el ID de la materia :')
+                var grade = readline.questionFloat('Ingresa la nota del alumno en la materia indicada: ')
+
+                if(grade<0||grade>10){
+                    console.log('ERROR: La nota tiene que ir del 0 al 10')
+                }else{
+                    grades.push(new Grade(studentID, subjectID, grade))
+                }
+
+                break;
+            case 7:
+                var aux1 :string;
+                var aux2 : string;
+                
+                grades.forEach((g) =>{
+                    console.log(g.toString());
+                });
+                break;
+            default:
                 break;
         }
 
