@@ -35,7 +35,7 @@ function main(){
     const index = readline.keyInSelect(options, 'Seleccciona una opción: ')
 
     if(index === -1) {
-        console.log('Operación cancelada.');
+        console.log('\nOperación cancelada.');
         return;
     }
     
@@ -44,7 +44,7 @@ function main(){
                 var studentName = readline.question('\nIngrese el nombre del alumno: ')
                 var studentSurname = readline.question('\nIngrese el apellido del alumno: ')
                 if(studentName.length <= 0 || studentSurname.length <= 0){
-                    console.log('El nombre del alumno no puede contener campos vacíos.')
+                    console.log('\nERROR: El nombre del alumno no puede contener campos vacíos.')
                 }else{
                     var age = readline.questionInt('\nIngrese la edad del alumno: ')
                 students.push(new Student(studentName, studentSurname, age))
@@ -52,13 +52,13 @@ function main(){
                 break;
             case 1:
                 students.forEach((student) => {
-                    console.log(student.toString())
+                    console.log('\n'+student.toString())
                 });
                 break;
             case 2:
-                var subjectIDToAdd = readline.questionInt('Ingrese el ID de la asignatura a añadir: ');
+                var subjectIDToAdd = readline.questionInt('\nIngrese el ID de la asignatura a añadir: ');
 
-                var studentID = readline.questionInt('Ingresa la ID del alumno al que quieres añadirle la asignatura: ')
+                var studentID = readline.questionInt('\nIngrese la ID del alumno al que quieres añadirle la asignatura: ')
 
                 students.forEach((student) =>{
                     if(student.getStudentID === studentID){
@@ -71,10 +71,17 @@ function main(){
                 });
                 break;
             case 3:
-                var studentID = readline.questionInt('Ingresa la ID del alumno del que quieres saber sus asignaturas: ')
+                var studentID = readline.questionInt('\nIngrese la ID del alumno del que quieres saber sus asignaturas: ')
+                var aux : string="";
+
+                students.forEach((student) => {
+                    if(student.getStudentID===studentID){
+                        aux= student.getStudentName+' ' +student.getStudentSurname;
+                    }
+                });
                 
                 //Intentar añadir el nombre cuando se dicen las materias asignadas a un alumno
-                console.log('Las asignaturas del alumno son las siguientes: \n')
+                console.log('\nLas asignaturas del alumno '+aux+' son las siguientes:')
                 students.forEach((student) => {
                     if(student.getStudentID===studentID){
                         student.getStudentSubjects()
@@ -84,23 +91,23 @@ function main(){
             case 4:
                 var subjectName = readline.question('Ingrese el nombre de la asignatura: ')
                 if(subjectName.length <= 0 ){
-                    console.log('ERROR: El nombre de la asignatura no puede contener campos vacíos.')
+                    console.log('\nERROR: El nombre de la asignatura no puede contener campos vacíos.')
                 }else{
                     subjects.push(new Subject(subjectName))
                 }
                 break;
             case 5:
                 subjects.forEach((subject) => {
-                    console.log(subject.toString())
+                    console.log('\n'+subject.toString())
                 });
                 break;
             case 6:
-                var studentID = readline.questionInt('Ingresa el ID del alumno al que le quieres añadir nota: ')
-                var subjectID = readline.questionInt('Ingresa el ID de la materia :')
-                var grade = readline.questionFloat('Ingresa la nota del alumno en la materia indicada: ')
+                var studentID = readline.questionInt('\nIngrese el ID del alumno al que le quieres añadir nota: ')
+                var subjectID = readline.questionInt('\nIngrese el ID de la materia :')
+                var grade = readline.questionFloat('\nIngrese la nota del alumno en la materia indicada: ')
 
                 if(grade<0||grade>10){
-                    console.log('ERROR: La nota tiene que ir del 0 al 10')
+                    console.log('\nERROR: La nota tiene que ir del 0 al 10')
                 }else{
                     grades.push(new Grade(studentID, subjectID, grade))
                 }
@@ -111,11 +118,22 @@ function main(){
                 var aux2 : string;
                 
                 grades.forEach((g) =>{
-                    console.log(g.toString());
+                    students.forEach((s) =>{
+                        if(g.getStudentID===s.getStudentID){
+                            aux1=s.getStudentName+" "+s.getStudentSurname
+                        }
+                    });
+                    subjects.forEach((s) =>{
+                        if(g.getSubjectID===s.getSubjectID){
+                            aux2=s.getSubjectName
+                        }
+                    });
+                    console.log('\nEl alumno '+aux1+' tiene un '+g.getGrade+' en la asignatura '+aux2+'.')
                 });
                 break;
-            default:
-                break;
+                default:
+                    console.log('Operación no válida.');
+                    return;
         }
 
         const continuar = readline.keyInYN('\n¿Desea realizar otra operación? ');

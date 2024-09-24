@@ -27,8 +27,4 @@ export class Grade implements gradesInterface{
     get getSubjectID():number{
         return this.idSubject;
     }
-
-    toString():string{
-        return (`El alumno con ID ${this.idStudent} tiene un ${this.grade} en la asignatura con ID ${this.getSubjectID} `)
-    }
 }
